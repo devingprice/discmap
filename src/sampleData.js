@@ -1,4 +1,5 @@
 export const dataSample = {
+    //course:{},
     holes: [
         {
             details: { //wont change after initial set

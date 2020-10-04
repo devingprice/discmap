@@ -6,6 +6,7 @@ import EditingToggle from './EditingToggle';
 import { EditCurve } from '../Svg';
 import Controls from '../Controls';
 import Row from '../Row';
+import AppBar from '../AppBar';
 
 import { createVisibleState } from '../helper';
 import { dataSample, playersSample } from '../sampleData';
@@ -49,9 +50,12 @@ const App = () => {
     const updateExtras = () => {};
 
     return (
-        <main>
+        <React.Fragment>
+        <AppBar>
             <EditingToggle editing={editing} setEditing={setEditing} />
-
+        </AppBar>
+        <main>
+            
             {   data && data.holes && 
                 data.holes.map(hole => (
                     <Row 
@@ -78,6 +82,7 @@ const App = () => {
                 </div>
             </div>
         </main>
+        </React.Fragment>
 	)
 }
 
