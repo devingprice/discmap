@@ -1,0 +1,11 @@
+.disc-row {
+    display: flex;
+    flex-direction: row;
+    max-height: 600px;
+}
+.disc-row .controls, .hole-map {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    padding: 20px;
+}

@@ -1,0 +1,21 @@
+.hole-controls {
+    padding: 20px;
+}
+
+
+.byplayerrow-collapsable {
+    height: 0;
+    overflow: hidden;
+    transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.byplayerrow-hidden {
+    visibility: hidden;
+}
+.byplayerrow-expanded {
+    height: auto;
+    overflow: visible;
+}
+
+.by-player-row-button-active {
+    background-color: lightblue !important;
+}
