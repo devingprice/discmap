@@ -7,6 +7,7 @@ import { EditCurve } from '../Svg';
 import Controls from '../Controls';
 import Row from '../Row';
 import AppBar from '../AppBar';
+import CourseDetails from '../CourseDetails';
 
 import { createVisibleState } from '../helper';
 import { dataSample, playersSample } from '../sampleData';
@@ -55,6 +56,7 @@ const App = () => {
             <EditingToggle editing={editing} setEditing={setEditing} />
         </AppBar>
         <main>
+            <CourseDetails courseData={data.course || {}} courseText={''} editing={editing}/>
             
             {   data && data.holes && 
                 data.holes.map(hole => (

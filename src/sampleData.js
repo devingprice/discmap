@@ -1,5 +1,10 @@
 export const dataSample = {
-    //course:{},
+    course: {
+        name: "Idlewild",
+        holeCount: 18,
+        distance: '3000ft',
+        headerImage: ''
+    },
     holes: [
         {
             details: { //wont change after initial set
