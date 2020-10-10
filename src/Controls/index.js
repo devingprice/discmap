@@ -31,7 +31,8 @@ export default (props) => {
                         <ByPlayerRow {...entry}
                             key={`player-row-${entry.id}`} 
                             activeThrow={props.activeThrow}
-                            setActiveThrow={props.setActiveThrow} 
+                            setActiveThrow={props.setActiveThrow}
+                            setVisibility={props.setVisibility}
                         />
                     )
                 }

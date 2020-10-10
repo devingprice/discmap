@@ -11,9 +11,11 @@ export default (props) => {
 
     const clickRoundButton = (newEntryKey) => {
         if (newEntryKey === activeEntry) {
-            setActiveEntry(null)
+            setActiveEntry(null);
+            props.setVisibility(null);
         } else {
-            setActiveEntry(newEntryKey)
+            setActiveEntry(newEntryKey);
+            props.setVisibility(newEntryKey);
         }
     }
 
