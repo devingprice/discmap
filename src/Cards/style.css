@@ -1,0 +1,47 @@
+.card-container {
+    display: flex;
+    flex-direction: row;
+}
+.AllPlayersCont {
+    background-color: lightcoral;
+    min-height: 100vh;
+    /* like display:flex but will allow bleeding over the window width */
+    min-width: 100vw;
+    display: inline-flex;
+}
+
+.board {
+    display:flex;
+    flex-direction: row;
+    background-color: lightblue;
+    /* min-height: 100vh;
+    like display:flex but will allow bleeding over the window width 
+    min-width: 100vw;
+    display: inline-flex;*/
+}
+.column {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: lightcyan;
+    transition: blue 0.2s ease;
+}
+.Header:hover {
+    background-color: lightgreen;
+}
+.Header.isDragging {
+    background-color: lightseagreen;
+}
+.player-item {
+    width: 140px;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid black;
+}

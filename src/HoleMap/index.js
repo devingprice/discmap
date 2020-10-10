@@ -2,39 +2,51 @@ import React, { useState, useRef, useEffect } from 'react';
 
 import {Tee, Basket, Throw} from '../helper/svgComponents';
 
-export default ({holeNum, visibility, map, entries, extras, activeThrow, editing}) => {
+export default ({holeNum, visibility, map, entries, extras, activeThrow, editing, updateActiveThrowPath}) => {
     const containerRef = useRef(null);
     const [draggingPointId, setDraggingPointId] = useState(null);
+    const [activeThrowPath, setActiveThrowPath] = useState(null);
+    const [down, setDown] = useState(false);
 
     const viewBox = map.viewBox.trim().split(' ').map(e=>e.trim());
 
     const [originXTrans, originYTrans, viewBoxWidth, viewBoxHeight] = viewBox.length === 4 ? viewBox : ['0','0','100','100'];
     
     //this is really inefficient, activeThrowPath should be beside activeThrow on parent
-    let activeThrowPath;
-    // useEffect(() => {
+    //let activeThrowPath;
+    useEffect(() => {
         entries.forEach(entry => {
             entry.throws.forEach(t => {
                 if (t.uid === activeThrow) {
-                    activeThrowPath = t.svg
+                    setActiveThrowPath(t.svg)
+                    //activeThrowPath = t.svg
                 }
             })
         })
-    // }, [activeThrow]);
+    }, [activeThrow]);
 
     const handleMouseDown = (pointId) => {
         setDraggingPointId(pointId);
+        console.log('down')
+        setDown(true);
     }
   
     const handleMouseUp = () => {
         setDraggingPointId(null);
+        console.log('up')
+        if(down) { 
+            console.log('release')
+            updateActiveThrowPath(holeNum, activeThrow, activeThrowPath)
+        }
+        setDown(false);
+        
     }
 
     const handleMouseMove = ({ clientX, clientY }) => {
         if (!activeThrow) {
             return;
         }
-        console.log(activeThrowPath, activeThrow)
+        //console.log(activeThrowPath, activeThrow)
         const svgRect = containerRef.current.getBoundingClientRect();
 
         const svgX = clientX - svgRect.left;
@@ -52,19 +64,23 @@ export default ({holeNum, visibility, map, entries, extras, activeThrow, editing
             switch(draggingPointId){
                 case 'startPoint':
                     regex = /(?<=^(M ))(-*\d+,-*\d*)/g;
-                    console.log(activeThrowPath.replace(regex, str))
+                    //updateActiveThrowPath(holeNum, activeThrow, activeThrowPath.replace(regex, str))
+                    setActiveThrowPath(activeThrowPath.replace(regex, str))
                     break;
                 case 'handle1':
                     regex = /(?<=^(M )(-*\d+,-*\d* )(C ))(-*\d+,-*\d*)/g;
-                    console.log(activeThrowPath.replace(regex, str))
+                    //updateActiveThrowPath(holeNum, activeThrow, activeThrowPath.replace(regex, str))
+                    setActiveThrowPath(activeThrowPath.replace(regex, str))
                     break;
                 case 'handle2':
                     regex = /(?<=^(M )(-*\d+,-*\d* )(C )(-*\d+,-*\d* ))(-*\d+,-*\d*)/g;
-                    console.log(activeThrowPath.replace(regex, str))
+                    //updateActiveThrowPath(holeNum, activeThrow, activeThrowPath.replace(regex, str))
+                    setActiveThrowPath(activeThrowPath.replace(regex, str))
                     break;
                 case 'endPoint':
                     regex = /(?<=^(M )(-*\d+,-*\d* )(C )(-*\d+,-*\d* )(-*\d+,-*\d* ))(-*\d+,-*\d*)/g;
-                    console.log(activeThrowPath.replace(regex, str))
+                    //updateActiveThrowPath(holeNum, activeThrow, activeThrowPath.replace(regex, str))
+                    setActiveThrowPath(activeThrowPath.replace(regex, str))
                     break;
                 default: 
                     break;
@@ -101,10 +117,12 @@ export default ({holeNum, visibility, map, entries, extras, activeThrow, editing
 
                 {
                     entries.flatMap(entry => 
-                        entry.throws.map((t)=>(
+                        entry.throws.map((t)=>{ 
+                            if (!visibility.throws[entry.uid][t.uid]) return null;
+                        return (
                             <Throw key={`${holeNum}-${t.uid}`}
                                 uid={t.uid} 
-                                path={t.svg}
+                                path={t.uid === activeThrow ? activeThrowPath : t.svg}
                                 types={{
                                     offTee: t.offTee,
                                     circle1: t.circle1,
@@ -119,7 +137,7 @@ export default ({holeNum, visibility, map, entries, extras, activeThrow, editing
                                 }
                                 editing={editing}
                             />
-                        ))
+                        )})
                     )
                 }
             </svg>

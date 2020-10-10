@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './style.css';
 
 import HoleMap from '../HoleMap';
@@ -6,18 +6,51 @@ import HoleText from '../HoleText';
 import Controls from '../Controls';
 
 function constructVisibleState (rowData) {
-    return {};
+    console.log('construct')
+    let initial = {
+        trees: true,
+        tee: true,
+        basket: true,
+        circle1: false,
+        circle2: false,
+        zones: {},
+        throws: {},
+        extras: {},
+    };
+
+    rowData.zones.forEach(zone => {
+        initial.zones[zone.uid] = false;
+    });
+    rowData.entries.forEach(entry => {
+        let throws = {};
+        entry.throws.forEach(thr=> throws[thr.uid] = false)
+        initial.throws[entry.uid] = {
+            ...throws
+        };
+    });
+    rowData.extras.forEach(extra => {
+        initial.extras[extra.uid] = false;
+    });
+
+    //console.log(initial)
+    return initial;
 }
 
-export default ({players, singleRowData, holeText, editing}) => {
+export default ({players, singleRowData, holeText, editing, updateActiveThrowPath}) => {
     //this will hold the state and functions to change state
     const [visibility, setVisibility] = useState(constructVisibleState(singleRowData)); //could also do in an effect
-    // const [count, setCount] = useState(0);
     const [activeThrow, setActiveThrow] = useState(null);
 
+
     const updateVisibility = (inputData) => {
-        let newVisibility = visibility;
-        //edit newVisibility
+        let newVisibility = constructVisibleState(singleRowData);
+        let isRound = inputData.split('-').length === 2;
+        if(isRound && newVisibility.throws[inputData]) {
+            Object.keys(newVisibility.throws[inputData]).forEach(k => {
+                newVisibility.throws[inputData][k] = true;
+            })
+        }
+        
         setVisibility(newVisibility);
     }
 
@@ -46,6 +79,7 @@ export default ({players, singleRowData, holeText, editing}) => {
                     extras={singleRowData.extras}
                     activeThrow={activeThrow}
                     editing={editing}
+                    updateActiveThrowPath={updateActiveThrowPath}
                 />
                 <div className="controls">
                     Controls {editing? "WITH EDITING" : ""}
@@ -54,7 +88,7 @@ export default ({players, singleRowData, holeText, editing}) => {
                         players={players} 
                         activeThrow={activeThrow}
                         setActiveThrow={setActiveThrow}
-                        setVisibility={setVisibility /* for making the player-round visible on button click*/} 
+                        setVisibility={updateVisibility /* for making the player-round visible on button click*/} 
                         editing={editing}
                     />
                 </div>

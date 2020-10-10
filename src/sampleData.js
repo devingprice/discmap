@@ -1,5 +1,10 @@
 export const dataSample = {
-    //course:{},
+    course: {
+        name: "Idlewild",
+        holeCount: 18,
+        distance: '3000ft',
+        headerImage: ''
+    },
     holes: [
         {
             details: { //wont change after initial set
@@ -52,19 +57,19 @@ export const dataSample = {
                         {
                             uid: '1-2-1',
                             throw: 1,
-                            svg: 'path',
+                            svg: 'M 0,0 C 0,75 -80,200 -80,200',
                             offTee: true,
                         },
                         {
                             uid: '1-2-2',
                             throw: 2,
-                            svg: ['path', 'path'],
+                            svg: 'M -80,200 C -80,200 -20,300 -20,280',
                             circle1: true
                         },
                         {
                             uid: '1-2-3',
                             throw: 3,
-                            svg: 'path',
+                            svg: 'M -20,280 C -20,300 -30,300 -30,300',
                             putt: true,
                             inBasket: true,
                         },
@@ -95,6 +100,7 @@ export const dataSample = {
             extras: [
                 // for non player throw lines / alternate options/ cameo throws / throws from other tournaments
             ],
+            zones: []
             //teeOrder: {} //round-card order (helps enter data)
         }
     ]
@@ -144,6 +150,45 @@ export const playersSample = [
     },
 ]
 
+export const playerObjectSample = {
+    "1": {
+        name: 'Paul McBeth',
+        nickname: 'Paul',
+        pic: '',
+        id: 1,
+    },
+    "2": {
+        name: 'Nate Sexton',
+        nickname: 'Sexton',
+        pic: '',
+        id: 2,
+    },
+    "3": {
+        name: 'Jeremy Koling',
+        nickname: 'Big Jerm',
+        pic: '',
+        id: 3,
+    },
+    "4": {
+        name: 'Paul Ulibarri',
+        nickname: 'Berry',
+        pic: '',
+        id: 4,
+    },
+    "5": {
+        name: 'Ricky Wysocki',
+        nickname: 'SockiBomb',
+        pic: '',
+        id: 5,
+    },
+    "6": {
+        name: 'Eagle McMahon',
+        nickname: 'Eagle',
+        pic: '',
+        id: 6,
+    },
+}
+
 export const sampleText = {
     holes: [
         {
@@ -156,9 +201,9 @@ export const sampleText = {
 //  and hole-round-stats (for scoring avg for the round)
 
 
-export const cards = {
-    "uid" : {
-        uid: '',
+export const cardsSample = {
+    "uid0001" : {
+        uid: 'uid0001',
         players: [1,2,3,4], //in order of start
         round: 1,
     },
